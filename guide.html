@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EcoTrend | Sustainable Fashion Guide</title>
+
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: #f7f7f0;
+  color: #26372d;
+}
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 22px 8%;
+  background: #fff;
+  border-bottom: 1px solid #e5e8df;
+}
+
+.logo {
+  font-size: 24px;
+  font-weight: 700;
+  color: #2b6044;
+}
+
+nav a {
+  text-decoration: none;
+  color: #34483a;
+  font-weight: 600;
+}
+
+.hero {
+  padding: 85px 8%;
+  background: #e8eee3;
+}
+
+.hero span {
+  color: #52775c;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.hero h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(38px, 7vw, 68px);
+  max-width: 800px;
+  margin: 20px 0;
+  line-height: 1.1;
+}
+
+.hero p {
+  max-width: 620px;
+  line-height: 1.8;
+  color: #637366;
+}
+
+.container {
+  padding: 65px 8%;
+}
+
+.section-heading {
+  font-family: 'Playfair Display', serif;
+  font-size: 38px;
+  margin-bottom: 12px;
+}
+
+.section-description {
+  color: #718074;
+  line-height: 1.7;
+  margin-bottom: 30px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 22px;
+}
+
+.card {
+  background: white;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid #e5e8df;
+  transition: 0.3s;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 25px rgba(30, 60, 40, 0.08);
+}
+
+.card img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+}
+
+.card-content {
+  padding: 23px;
+}
+
+.card h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 24px;
+  margin-bottom: 12px;
+}
+
+.card p {
+  font-size: 14px;
+  color: #68786a;
+  line-height: 1.8;
+}
+
+.tag {
+  display: inline-block;
+  margin-bottom: 12px;
+  color: #4b7656;
+  background: #e9f1e7;
+  border-radius: 20px;
+  padding: 6px 12px;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.tips {
+  background: #294b37;
+  color: white;
+  border-radius: 18px;
+  padding: 45px;
+  margin-top: 60px;
+}
+
+.tips h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 35px;
+  margin-bottom: 25px;
+}
+
+.tip-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 25px;
+}
+
+.tip {
+  border-top: 1px solid #607c68;
+  padding-top: 18px;
+}
+
+.tip h3 {
+  margin-bottom: 10px;
+}
+
+.tip p {
+  color: #d3dfd4;
+  line-height: 1.7;
+  font-size: 14px;
+}
+
+footer {
+  padding: 30px 8%;
+  background: #fff;
+  text-align: center;
+  color: #758175;
+}
+
+footer a {
+  color: #356347;
+  text-decoration: none;
+}
+
+@media(max-width:600px) {
+  nav {
+    padding: 18px 5%;
+  }
+
+  .hero {
+    padding: 60px 6%;
+  }
+
+  .container {
+    padding: 45px 6%;
+  }
+
+  .tips {
+    padding: 27px;
+  }
+
+  .hero h1 {
+    font-size: 42px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<nav>
+  <div class="logo">EcoTrend 🌿</div>
+  <a href="index.html">← Back to Home</a>
+</nav>
+
+<section class="hero">
+  <span>Discover • Learn • Rewear</span>
+
+  <h1>Fashion can be beautiful and thoughtful.</h1>
+
+  <p>
+    Explore simple ways to make better clothing choices,
+    take care of what you own, and create a wardrobe
+    that reflects your personal style without unnecessary waste.
+  </p>
+</section>
+
+<section class="container">
+
+  <h2 class="section-heading">Explore Sustainable Fabrics</h2>
+
+  <p class="section-description">
+    Understanding fabrics is one step towards more informed
+    clothing choices. Every material has its own benefits
+    and environmental considerations.
+  </p>
+
+  <div class="grid">
+
+    <div class="card">
+      <img src="https://images.unsplash.com/photo-1523381210434-271e8be1f52b?auto=format&fit=crop&w=800&q=80" alt="Cotton clothing">
+      <div class="card-content">
+        <span class="tag">NATURAL FIBRE</span>
+        <h3>Cotton</h3>
+        <p>
+          Comfortable and breathable. Organic cotton can reduce
+          certain chemical inputs, although its impact also
+          depends on water, production and processing.
+        </p>
+      </div>
+    </div>
+
+    <div class="card">
+      <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=800&q=80" alt="Linen fabric">
+      <div class="card-content">
+        <span class="tag">PLANT BASED</span>
+        <h3>Linen</h3>
+        <p>
+          Made from flax fibres. Linen is known for its texture,
+          breathability and natural appearance.
+        </p>
+      </div>
+    </div>
+
+    <div class="card">
+      <img src="https://images.unsplash.com/photo-1591047139829-d91aecb6caea?auto=format&fit=crop&w=800&q=80" alt="Denim clothing">
+      <div class="card-content">
+        <span class="tag">LONG LASTING</span>
+        <h3>Denim</h3>
+        <p>
+          A versatile fabric that can be worn for years.
+          Reusing denim and choosing durable pieces can
+          help reduce frequent replacement.
+        </p>
+      </div>
+    </div>
+
+    <div class="card">
+      <img src="https://images.unsplash.com/photo-1551232864-3f0890e580d9?auto=format&fit=crop&w=800&q=80" alt="Recycled fabric">
+      <div class="card-content">
+        <span class="tag">REUSE & RECYCLE</span>
+        <h3>Recycled Fibres</h3>
+        <p>
+          Fibres made using recovered materials can help
+          reuse resources. Their overall impact depends
+          on the material and manufacturing process.
+        </p>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="tips">
+
+    <h2>Small habits. Better choices.</h2>
+
+    <div class="tip-list">
+
+      <div class="tip">
+        <h3>01 — Buy thoughtfully</h3>
+        <p>
+          Before purchasing, consider whether you really need
+          the item and how it fits into your existing wardrobe.
+        </p>
+      </div>
+
+      <div class="tip">
+        <h3>02 — Rewear more</h3>
+        <p>
+          Try new combinations with the clothes you already
+          have instead of always looking for something new.
+        </p>
+      </div>
+
+      <div class="tip">
+        <h3>03 — Care for clothes</h3>
+        <p>
+          Follow garment care instructions, wash thoughtfully,
+          and repair small problems whenever possible.
+        </p>
+      </div>
+
+      <div class="tip">
+        <h3>04 — Give clothes another life</h3>
+        <p>
+          Donate, exchange, repurpose or recycle clothing
+          that you no longer use, where suitable options exist.
+        </p>
+      </div>
+
+    </div>
+  </div>
+
+</section>
+
+<footer>
+  <p>EcoTrend 🌿 — Make style last.</p>
+  <p style="margin-top:10px">
+    <a href="index.html">Home</a> |
+    Sustainable Fashion Guide
+  </p>
+</footer>
+
+</body>
+</html>
+
