@@ -1,0 +1,417 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EcoTrend | Sustainable Fashion</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --green: #526b52;
+  --dark: #202a22;
+  --cream: #f7f6f0;
+  --light: #e9eee5;
+  --text: #2b302b;
+  --muted: #747b72;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body {
+  font-family:'DM Sans',sans-serif;
+  background:var(--cream);
+  color:var(--text);
+}
+nav {
+  display:flex; justify-content:space-between; align-items:center;
+  padding:22px 7%; background:var(--cream);
+  position:sticky; top:0; z-index:20;
+}
+.logo { font-size:24px; font-weight:700; letter-spacing:2px; color:var(--green); }
+.logo span { color:#b28d5b; }
+.navlinks { display:flex; gap:26px; align-items:center; }
+.navlinks a { text-decoration:none; color:var(--text); font-size:14px; }
+.navlinks a:hover { color:var(--green); }
+.menu { display:none; border:0; background:none; font-size:25px; }
+.hero {
+  min-height:600px; display:flex; align-items:center;
+  padding:65px 7%; background:#e9eee5;
+}
+.hero-content { width:50%; }
+.tag { color:var(--green); letter-spacing:3px; font-size:12px; font-weight:700; }
+.hero h1 {
+  font-family:'Playfair Display',serif;
+  font-size:clamp(45px,6vw,80px);
+  line-height:1.08; margin:22px 0;
+}
+.hero h1 em { color:var(--green); }
+.hero p { max-width:450px; color:#687267; line-height:1.8; }
+.btn {
+  display:inline-block; padding:14px 25px; margin-top:24px;
+  background:var(--green); color:white; border-radius:3px;
+  text-decoration:none; border:1px solid var(--green);
+  cursor:pointer; transition:.25s;
+}
+.btn:hover { background:#344c37; transform:translateY(-2px); }
+.hero-img {
+  width:50%; height:460px; border-radius:180px 180px 8px 8px;
+  object-fit:cover;
+}
+section { padding:85px 7%; }
+.section-title { font-family:'Playfair Display',serif; font-size:43px; margin-bottom:12px; }
+.section-sub { color:var(--muted); line-height:1.7; margin-bottom:35px; }
+.grid { display:grid; grid-template-columns:repeat(3,1fr); gap:24px; }
+.card { background:white; border-radius:9px; overflow:hidden; transition:.3s; }
+.card:hover { transform:translateY(-5px); box-shadow:0 15px 30px #263c2610; }
+.card img { width:100%; height:280px; object-fit:cover; }
+.card-content { padding:22px; }
+.card-content h3 { font-family:'Playfair Display',serif; font-size:24px; margin-bottom:10px; }
+.card-content p { color:var(--muted); font-size:14px; line-height:1.7; }
+.small-btn {
+  border:1px solid var(--green); background:white; color:var(--green);
+  padding:10px 16px; border-radius:3px; cursor:pointer; margin-top:15px;
+}
+.small-btn:hover { background:var(--green); color:white; }
+.feature { background:var(--light); }
+.tool-grid { display:grid; grid-template-columns:1fr 1fr; gap:25px; }
+.tool {
+  background:white; padding:30px; border-radius:10px;
+}
+.tool h3 { font-family:'Playfair Display',serif; font-size:27px; margin-bottom:12px; }
+.tool p { color:var(--muted); line-height:1.7; font-size:14px; }
+label { display:block; margin-top:18px; font-size:14px; font-weight:600; }
+select,input {
+  width:100%; padding:12px; border:1px solid #d6ddd2;
+  border-radius:4px; margin-top:8px; background:#fff; font:inherit;
+}
+.result {
+  display:none; background:#e9eee5; margin-top:20px;
+  padding:20px; border-radius:6px; line-height:1.7;
+}
+.result.show { display:block; }
+.wardrobe { background:#f3eee5; }
+.wardrobe-items { display:flex; flex-wrap:wrap; gap:10px; margin:20px 0; }
+.wardrobe-items button {
+  padding:12px 17px; border-radius:30px; border:1px solid #b5c1b2;
+  background:white; cursor:pointer;
+}
+.wardrobe-items button.selected { background:var(--green); color:white; }
+.quiz-options { display:grid; gap:10px; margin-top:20px; }
+.quiz-options button {
+  padding:13px; background:#f5f6f1; border:1px solid #d9e0d5;
+  border-radius:5px; cursor:pointer; text-align:left;
+}
+.quiz-options button:hover { background:#e9eee5; }
+footer { padding:40px 7%; background:var(--dark); color:white; }
+footer p { margin-top:10px; color:#b9c2b9; line-height:1.7; }
+footer a { color:white; }
+#toast {
+  position:fixed; bottom:20px; left:50%; transform:translateX(-50%);
+  background:var(--dark); color:white; padding:13px 20px;
+  border-radius:6px; display:none; z-index:100;
+}
+@media(max-width:800px) {
+  .navlinks { display:none; position:absolute; top:70px; left:0; right:0;
+    background:var(--cream); padding:25px; flex-direction:column; }
+  .navlinks.open { display:flex; }
+  .menu { display:block; }
+  .hero { flex-direction:column; gap:35px; }
+  .hero-content,.hero-img { width:100%; }
+  .hero-img { height:360px; }
+  .grid { grid-template-columns:1fr; }
+  .tool-grid { grid-template-columns:1fr; }
+  section { padding:60px 6%; }
+  .section-title { font-size:35px; }
+}
+</style>
+</head>
+
+<body>
+
+<nav>
+  <div class="logo">ECO<span>TREND</span></div>
+  <button class="menu" onclick="toggleMenu()">☰</button>
+  <div class="navlinks" id="navlinks">
+    <a href="#home">Home</a>
+    <a href="#discover">Discover</a>
+    <a href="#ecocheck">Eco Check</a>
+    <a href="#wardrobe">Wardrobe</a>
+    <a href="#quiz">Quiz</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header class="hero" id="home">
+  <div class="hero-content">
+    <span class="tag">FASHION WITH A PURPOSE</span>
+    <h1>Wear the trend.<br><em>Respect the planet.</em></h1>
+    <p>Discover a better way to dress. Explore timeless styles,
+    thoughtful choices and small actions that make fashion more sustainable.</p>
+    <a href="#discover" class="btn">Explore the collection →</a>
+  </div>
+  <img class="hero-img"
+  src="https://images.unsplash.com/photo-1539109136881-3be0616acf4b?auto=format&fit=crop&w=1000&q=85"
+  alt="Fashion editorial">
+</header>
+
+<!-- DISCOVER -->
+<section id="discover">
+  <span class="tag">CONSCIOUS STYLE</span>
+  <h2 class="section-title">Style that stays.</h2>
+  <p class="section-sub">Trends come and go. A thoughtful wardrobe lasts longer.</p>
+
+  <div class="grid">
+    <article class="card">
+      <img src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&w=700&q=80" alt="Timeless clothing">
+      <div class="card-content">
+        <h3>Timeless Wardrobe</h3>
+        <p>Choose versatile pieces that work across seasons. Build a wardrobe you love wearing again and again.</p>
+      </div>
+    </article>
+
+    <article class="card">
+      <img src="https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&w=700&q=80" alt="Everyday fashion">
+      <div class="card-content">
+        <h3>Wear It Your Way</h3>
+        <p>Express yourself through styling. Repeating an outfit is creativity, not a fashion mistake.</p>
+      </div>
+    </article>
+
+    <article class="card">
+      <img src="https://images.unsplash.com/photo-1551232864-3f0890e580d9?auto=format&fit=crop&w=700&q=80" alt="Clothing collection">
+      <div class="card-content">
+        <h3>Buy More Mindfully</h3>
+        <p>Before buying, think about quality, comfort, material and how often you will actually wear it.</p>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- ECO CHECK -->
+<section class="feature" id="ecocheck">
+  <span class="tag">MAKE BETTER CHOICES</span>
+  <h2 class="section-title">Your Eco Check</h2>
+  <p class="section-sub">Explore the factors that can make a clothing purchase more sustainable.</p>
+
+  <div class="tool-grid">
+    <div class="tool">
+      <h3>Clothing Sustainability Checker</h3>
+      <p>Answer these questions to get an educational sustainability score. This is a simple guide, not a certified product rating.</p>
+
+      <label>Material</label>
+      <select id="material">
+        <option value="1">Conventional polyester</option>
+        <option value="3">Cotton blend</option>
+        <option value="4">Organic cotton / recycled material</option>
+        <option value="5">Certified sustainable material</option>
+      </select>
+
+      <label>Expected durability</label>
+      <select id="durability">
+        <option value="1">Short-lived / poor quality</option>
+        <option value="3">Average durability</option>
+        <option value="5">Long-lasting quality</option>
+      </select>
+
+      <label>How often will you wear it?</label>
+      <select id="wear">
+        <option value="1">Only once or twice</option>
+        <option value="3">Occasionally</option>
+        <option value="5">Frequently</option>
+      </select>
+
+      <button class="btn" onclick="calculateEco()">Calculate my score</button>
+      <div class="result" id="ecoResult"></div>
+    </div>
+
+    <div class="tool">
+      <h3>Why does it matter?</h3>
+      <p>Fashion sustainability is not only about the fabric. It also includes how clothes are made, how long they last, how workers are treated and what happens when we no longer need them.</p>
+      <br>
+      <p><b>Think before you buy:</b></p>
+      <p>• Will I wear this more than 10 times?</p>
+      <p>• Do I already own something similar?</p>
+      <p>• Can I repair or reuse it?</p>
+      <p>• Is the quality worth the price?</p>
+      <p>• Can I choose second-hand instead?</p>
+    </div>
+  </div>
+</section>
+
+<!-- WARDROBE -->
+<section class="wardrobe" id="wardrobe">
+  <span class="tag">CREATIVE REUSE</span>
+  <h2 class="section-title">Rewear Studio</h2>
+  <p class="section-sub">Select items you own and discover a simple outfit combination.</p>
+
+  <div class="tool">
+    <h3>What's in your wardrobe?</h3>
+    <div class="wardrobe-items">
+      <button onclick="selectItem(this,'White shirt')">White shirt</button>
+      <button onclick="selectItem(this,'Blue jeans')">Blue jeans</button>
+      <button onclick="selectItem(this,'Black trousers')">Black trousers</button>
+      <button onclick="selectItem(this,'Denim jacket')">Denim jacket</button>
+      <button onclick="selectItem(this,'Basic tee')">Basic tee</button>
+      <button onclick="selectItem(this,'Long skirt')">Long skirt</button>
+      <button onclick="selectItem(this,'Sneakers')">Sneakers</button>
+      <button onclick="selectItem(this,'Scarf')">Scarf</button>
+    </div>
+    <button class="btn" onclick="suggestOutfit()">Create outfit idea</button>
+    <div class="result" id="outfitResult"></div>
+  </div>
+</section>
+
+<!-- QUIZ -->
+<section id="quiz">
+  <span class="tag">TEST YOUR KNOWLEDGE</span>
+  <h2 class="section-title">The Eco Fashion Quiz</h2>
+  <p class="section-sub">Small choices. Big impact. Let's see what you know.</p>
+
+  <div class="tool">
+    <h3 id="question">Question 1: What is the most sustainable first step when you want new clothes?</h3>
+    <div class="quiz-options" id="options"></div>
+    <div class="result" id="quizResult"></div>
+    <button class="small-btn" id="nextBtn" onclick="nextQuestion()" style="display:none">Next question →</button>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="logo" style="color:#d5dfd1">ECO<span style="color:#c5a77b">TREND</span></div>
+  <p>Wear the trend. Respect the planet.</p>
+  <p>A student project exploring fashion, sustainability and conscious choices.</p>
+  <p style="margin-top:20px">© 2026 EcoTrend | Made with purpose 🌿</p>
+</footer>
+
+<div id="toast"></div>
+
+<script>
+function toggleMenu() {
+  document.getElementById('navlinks').classList.toggle('open');
+}
+document.querySelectorAll('.navlinks a').forEach(a => {
+  a.addEventListener('click', () => document.getElementById('navlinks').classList.remove('open'));
+});
+
+function calculateEco() {
+  const m = Number(document.getElementById('material').value);
+  const d = Number(document.getElementById('durability').value);
+  const w = Number(document.getElementById('wear').value);
+  const score = Math.round((m+d+w)/15*100);
+  let message = score >= 80
+    ? "Great choices! These factors suggest a more mindful purchase."
+    : score >= 50
+    ? "A balanced choice. Consider durability and how often you will wear it."
+    : "Pause before purchasing. Could you reuse, repair or borrow something instead?";
+  const box = document.getElementById('ecoResult');
+  box.innerHTML = "<h3>Your Eco Score: "+score+"/100</h3><p>"+message+"</p><p>Remember: the score is educational and not a verified environmental rating.</p>";
+  box.classList.add('show');
+}
+
+let selected = [];
+function selectItem(button, item) {
+  if(selected.includes(item)) {
+    selected = selected.filter(x => x !== item);
+    button.classList.remove('selected');
+  } else {
+    selected.push(item);
+    button.classList.add('selected');
+  }
+}
+
+function suggestOutfit() {
+  const box = document.getElementById('outfitResult');
+  if(selected.length < 2) {
+    box.innerHTML = "Select at least two items to create an outfit.";
+    box.classList.add('show');
+    return;
+  }
+  const ideas = [
+    "Try combining a neutral top with jeans, sneakers and a scarf for a relaxed look.",
+    "Layer your shirt with the denim jacket and pair it with trousers for a smart casual outfit.",
+    "Style your tee with a long skirt and sneakers for an effortless everyday look.",
+    "Pair your white shirt with black trousers. Add your scarf as an accessory for a new look."
+  ];
+  const idea = ideas[Math.floor(Math.random()*ideas.length)];
+  box.innerHTML = "<h3>Your selected items</h3><p>"+selected.join(" + ")+"</p><p><b>Styling idea:</b> "+idea+"</p><p>Rewearing what you already own is a great start to sustainable fashion.</p>";
+  box.classList.add('show');
+}
+
+const questions = [
+  {
+    q:"What is the most sustainable first step when you want new clothes?",
+    a:["Buy the latest trend","Check what you already own","Throw away old clothes"],
+    correct:1,
+    explain:"Using and styling what you already own helps avoid unnecessary purchases."
+  },
+  {
+    q:"What does circular fashion encourage?",
+    a:["Use clothing once","Throw clothes in mixed waste","Reuse, repair and recycle clothing"],
+    correct:2,
+    explain:"Circular fashion keeps clothing and materials in use for as long as possible."
+  },
+  {
+    q:"Which habit can help reduce clothing waste?",
+    a:["Repairing damaged clothes","Buying duplicates every week","Discarding clothes after one use"],
+    correct:0,
+    explain:"Repairing clothing can extend its useful life and reduce waste."
+  },
+  {
+    q:"What should you check before buying a clothing item?",
+    a:["Only its trend popularity","Quality, comfort and how often you'll wear it","Only its packaging"],
+    correct:1,
+    explain:"Considering quality and how often you'll wear an item supports more mindful shopping."
+  }
+];
+
+let current = 0;
+let quizScore = 0;
+let answered = false;
+
+function renderQuestion() {
+  answered = false;
+  const q = questions[current];
+  document.getElementById('question').textContent = "Question "+(current+1)+": "+q.q;
+  document.getElementById('quizResult').classList.remove('show');
+  document.getElementById('nextBtn').style.display = 'none';
+  const opts = document.getElementById('options');
+  opts.innerHTML = "";
+  q.a.forEach((answer,index) => {
+    const btn = document.createElement('button');
+    btn.textContent = answer;
+    btn.onclick = () => answerQuestion(index);
+    opts.appendChild(btn);
+  });
+}
+function answerQuestion(index) {
+  if(answered) return;
+  answered = true;
+  const q = questions[current];
+  if(index === q.correct) quizScore++;
+  document.getElementById('quizResult').innerHTML =
+    "<b>"+(index===q.correct ? "Correct! 🌿" : "Not quite!")+"</b><p>"+q.explain+"</p>";
+  document.getElementById('quizResult').classList.add('show');
+  document.querySelectorAll('#options button').forEach(b => b.disabled = true);
+  document.getElementById('nextBtn').style.display = 'inline-block';
+  document.getElementById('nextBtn').textContent = current===questions.length-1 ? "See my result" : "Next question →";
+}
+function nextQuestion() {
+  current++;
+  if(current >= questions.length) {
+    document.getElementById('question').textContent = "Quiz completed! 🌱";
+    document.getElementById('options').innerHTML = "";
+    document.getElementById('quizResult').innerHTML = "<h3>Your score: "+quizScore+" / "+questions.length+"</h3><p>"+(quizScore===questions.length ? "Amazing! You are an eco-fashion expert!" : "Great job learning about more sustainable fashion choices!")+"</p><button class='small-btn' onclick='restartQuiz()'>Try again</button>";
+    document.getElementById('quizResult').classList.add('show');
+    document.getElementById('nextBtn').style.display = 'none';
+  } else renderQuestion();
+}
+function restartQuiz() {
+  current=0;
+  quizScore=0;
+  renderQuestion();
+}
+renderQuestion();
+</script>
+</body>
+</html>
