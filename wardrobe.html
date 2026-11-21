@@ -3,412 +3,54 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>EcoTrend | Wardrobe Planner</title>
-
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+<title>EcoTrend | Virtual Try-On Studio</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;600;700&family=Playfair+Display:wght@500;600&display=swap" rel="stylesheet">
 
 <style>
-:root {
-  --green: #526b52;
-  --dark: #243128;
-  --cream: #f7f5ed;
-  --light: #e8ede3;
-  --white: #ffffff;
-  --muted: #7a8178;
-}
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-body {
-  font-family: 'DM Sans', sans-serif;
-  background: var(--cream);
-  color: var(--dark);
-}
-
-html {
-  scroll-behavior: smooth;
-}
-
-nav {
-  padding: 20px 7%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-bottom: 1px solid #e5e4dc;
-  background: var(--cream);
-  position: sticky;
-  top: 0;
-  z-index: 100;
-}
-
-.logo {
-  font-size: 22px;
-  font-weight: 700;
-  letter-spacing: 2px;
-  color: var(--green);
-}
-
-.logo span {
-  color: var(--dark);
-}
-
-nav a {
-  text-decoration: none;
-  color: var(--dark);
-  font-size: 14px;
-}
-
-nav a:hover {
-  color: var(--green);
-}
-
-.hero {
-  padding: 75px 7% 55px;
-  text-align: center;
-}
-
-.tag {
-  font-size: 11px;
-  letter-spacing: 3px;
-  color: var(--green);
-  font-weight: 700;
-  text-transform: uppercase;
-}
-
-.hero h1 {
-  font-family: 'Playfair Display', serif;
-  font-size: clamp(38px, 6vw, 66px);
-  margin: 20px 0;
-  line-height: 1.1;
-}
-
-.hero h1 span {
-  color: var(--green);
-}
-
-.hero p {
-  max-width: 570px;
-  margin: auto;
-  color: var(--muted);
-  line-height: 1.8;
-}
-
-.container {
-  max-width: 1100px;
-  margin: auto;
-  padding: 20px 6% 70px;
-}
-
-.section-title {
-  font-family: 'Playfair Display', serif;
-  font-size: 34px;
-  margin-bottom: 10px;
-}
-
-.subtitle {
-  color: var(--muted);
-  margin-bottom: 28px;
-  line-height: 1.7;
-}
-
-.category {
-  margin-bottom: 38px;
-}
-
-.category h3 {
-  font-size: 18px;
-  margin-bottom: 16px;
-}
-
-.items {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 15px;
-}
-
-.item {
-  border: 1px solid #dedfd6;
-  background: white;
-  padding: 22px 12px;
-  text-align: center;
-  border-radius: 12px;
-  cursor: pointer;
-  transition: 0.25s;
-}
-
-.item:hover {
-  transform: translateY(-4px);
-  border-color: var(--green);
-}
-
-.item.selected {
-  background: var(--light);
-  border: 2px solid var(--green);
-}
-
-.item .emoji {
-  font-size: 35px;
-  display: block;
-  margin-bottom: 10px;
-}
-
-.item p {
-  font-size: 13px;
-  font-weight: 600;
-}
-
-.item small {
-  color: var(--muted);
-  display: block;
-  margin-top: 5px;
-}
-
-.item.selected::after {
-  content: "✓ Selected";
-  display: block;
-  margin-top: 10px;
-  color: var(--green);
-  font-size: 11px;
-  font-weight: bold;
-}
-
-.buttons {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-  margin: 30px 0;
-}
-
-.btn {
-  padding: 14px 22px;
-  background: var(--green);
-  color: white;
-  border: 1px solid var(--green);
-  border-radius: 5px;
-  cursor: pointer;
-  font-family: inherit;
-  transition: 0.2s;
-}
-
-.btn:hover {
-  background: #3e5540;
-  transform: translateY(-2px);
-}
-
-.btn-outline {
-  background: transparent;
-  color: var(--green);
-}
-
-.btn-outline:hover {
-  color: white;
-}
-
-.result {
-  display: none;
-  background: #e9eee5;
-  border-radius: 16px;
-  padding: 28px;
-  margin-top: 25px;
-  animation: appear 0.4s ease;
-}
-
-.result.show {
-  display: block;
-}
-
-.result h2 {
-  font-family: 'Playfair Display', serif;
-  margin-bottom: 15px;
-}
-
-.outfit {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 12px;
-  margin: 20px 0;
-}
-
-.outfit-piece {
-  background: white;
-  border-radius: 10px;
-  text-align: center;
-  padding: 18px 8px;
-}
-
-.outfit-piece span {
-  font-size: 30px;
-  display: block;
-  margin-bottom: 8px;
-}
-
-.outfit-piece small {
-  font-size: 11px;
-  color: var(--muted);
-}
-
-.outfit-piece p {
-  font-size: 13px;
-  font-weight: 600;
-}
-
-.result-note {
-  line-height: 1.7;
-  color: #536253;
-  margin-top: 15px;
-}
-
-.saved-section {
-  margin-top: 60px;
-}
-
-.saved-list {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 15px;
-}
-
-.saved-card {
-  background: white;
-  border: 1px solid #e4e5dd;
-  border-radius: 12px;
-  padding: 20px;
-}
-
-.saved-card h3 {
-  margin-bottom: 10px;
-  font-size: 16px;
-}
-
-.saved-card p {
-  color: var(--muted);
-  font-size: 13px;
-  line-height: 1.7;
-}
-
-.saved-card button {
-  border: none;
-  background: transparent;
-  color: #a05454;
-  cursor: pointer;
-  margin-top: 12px;
-  font-family: inherit;
-}
-
-.tips {
-  background: #293b2d;
-  color: white;
-  border-radius: 15px;
-  padding: 35px;
-  margin-top: 65px;
-}
-
-.tips h2 {
-  font-family: 'Playfair Display', serif;
-  margin-bottom: 15px;
-}
-
-.tips p {
-  color: #d7dfd4;
-  line-height: 1.8;
-}
-
-.tips-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
-  margin-top: 25px;
-}
-
-.tip-box {
-  background: #354a38;
-  padding: 20px;
-  border-radius: 10px;
-}
-
-.tip-box h3 {
-  font-size: 15px;
-  margin-bottom: 8px;
-}
-
-.tip-box p {
-  font-size: 13px;
-}
-
-footer {
-  text-align: center;
-  padding: 28px;
-  border-top: 1px solid #e3e4dc;
-  color: var(--muted);
-  font-size: 13px;
-}
-
-footer a {
-  color: var(--green);
-  text-decoration: none;
-}
-
-.toast {
-  position: fixed;
-  bottom: 25px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: #293b2d;
-  color: white;
-  padding: 13px 20px;
-  border-radius: 8px;
-  display: none;
-  z-index: 999;
-}
-
-.toast.show {
-  display: block;
-  animation: appear 0.3s;
-}
-
-@keyframes appear {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@media (max-width: 700px) {
-  .items {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .outfit {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .saved-list {
-    grid-template-columns: 1fr;
-  }
-
-  .tips-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .hero {
-    padding-top: 50px;
-  }
-
-  .hero h1 {
-    font-size: 43px;
-  }
-
-  .section-title {
-    font-size: 29px;
-  }
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#f6f4ec;color:#29392e;font-family:'DM Sans',sans-serif}
+nav{padding:18px 6%;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #ddd;background:#f6f4ec}
+.logo{font-weight:700;letter-spacing:2px;color:#506b53;font-size:21px}
+nav a{color:#506b53;text-decoration:none}
+.hero{text-align:center;padding:42px 15px 25px}
+.hero small{letter-spacing:3px;color:#657d61;font-weight:bold}
+.hero h1{font-family:'Playfair Display',serif;font-size:43px;margin:12px 0}
+.hero p{color:#777;line-height:1.7}
+.studio{max-width:1000px;margin:20px auto;padding:15px;display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.avatar-box{background:#e7ece3;border-radius:24px;padding:15px;position:relative;overflow:hidden}
+.avatar-box h2{text-align:center;font-family:'Playfair Display',serif;margin:12px}
+.avatar-box .hint{text-align:center;color:#68786b;font-size:12px;margin-bottom:10px}
+.avatar{width:100%;max-width:390px;display:block;margin:auto}
+.control-box{background:white;border-radius:20px;padding:24px}
+.control-box h2{font-family:'Playfair Display',serif;margin-bottom:7px}
+.sub{font-size:13px;color:#777;margin-bottom:20px}
+.group{margin-bottom:23px}
+.group h3{font-size:14px;margin-bottom:11px}
+.options{display:flex;flex-wrap:wrap;gap:9px}
+.opt{border:1px solid #ddd;background:#fff;padding:10px 12px;border-radius:10px;cursor:pointer;font-family:inherit;font-size:12px}
+.opt.active{border:2px solid #61795f;background:#edf1e9;color:#435e46}
+.colors{display:flex;gap:12px;flex-wrap:wrap}
+.color{width:34px;height:34px;border-radius:50%;border:2px solid white;box-shadow:0 0 0 1px #ddd;cursor:pointer}
+.color.active{box-shadow:0 0 0 2px #506b53}
+.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:24px}
+.btn{border:0;padding:13px 16px;border-radius:9px;background:#526b52;color:white;cursor:pointer;font-family:inherit;font-weight:600}
+.btn.secondary{background:#edf1e9;color:#526b52}
+.btn:hover{opacity:.85}
+.look{margin-top:22px;padding:16px;background:#edf1e9;border-radius:12px}
+.look p{font-size:13px;line-height:1.8;margin-top:8px}
+.saved{max-width:1000px;margin:20px auto 50px;padding:15px}
+.saved h2{font-family:'Playfair Display',serif;margin-bottom:14px}
+.saved-items{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.saved-card{background:white;border:1px solid #e4e5dd;border-radius:12px;padding:16px;font-size:13px;line-height:1.8}
+.saved-card button{border:0;background:none;color:#a35353;cursor:pointer;margin-top:10px}
+footer{text-align:center;padding:25px;border-top:1px solid #ddd;color:#777;font-size:13px}
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#29392e;color:white;padding:13px 20px;border-radius:10px;display:none}
+.toast.show{display:block}
+@media(max-width:700px){
+.studio{grid-template-columns:1fr}
+.hero h1{font-size:36px}
+.saved-items{grid-template-columns:1fr}
+.avatar-box{min-height:380px}
 }
 </style>
 </head>
@@ -416,374 +58,370 @@ footer a {
 <body>
 
 <nav>
-  <div class="logo">ECO<span>TREND</span></div>
-  <a href="index.html">← Back to Home</a>
+  <div class="logo">ECO TREND</div>
+  <a href="index.html">← Home</a>
 </nav>
 
-<section class="hero">
-  <span class="tag">THINK · STYLE · REWEAR</span>
-  <h1>Your closet.<br><span>More possibilities.</span></h1>
-  <p>Select the pieces you already own and discover new ways to style them. Good fashion isn't about having more—it's about making more of what you have.</p>
-</section>
+<header class="hero">
+  <small>YOUR PERSONAL STYLE SPACE</small>
+  <h1>Virtual Try-On Studio</h1>
+  <p>Play with your style. Mix your looks. Wear more, waste less.</p>
+</header>
 
-<div class="container">
+<div class="studio">
 
-  <h2 class="section-title">Build your outfit</h2>
-  <p class="subtitle">Select clothes from each category. Mix your pieces and create your own style.</p>
+<!-- AVATAR -->
+<div class="avatar-box">
+  <h2>Your Style Avatar</h2>
+  <p class="hint">Change your outfit using the controls →</p>
 
-  <!-- TOPS -->
-  <div class="category">
-    <h3>01 — Choose your top</h3>
-    <div class="items" id="tops">
-      <div class="item" data-category="top" data-name="White Shirt" data-emoji="👔">
-        <span class="emoji">👔</span>
-        <p>White Shirt</p>
-        <small>Classic</small>
-      </div>
+  <svg class="avatar" viewBox="0 0 320 490" id="avatar">
+    <!-- Hair behind -->
+    <path id="hairBack" d="M105 82 Q75 60 85 135 L92 205 Q100 225 113 210 L120 150 Z
+    M215 82 Q245 60 235 135 L228 205 Q220 225 207 210 L200 150 Z"
+    fill="#38261d"/>
 
-      <div class="item" data-category="top" data-name="Black T-shirt" data-emoji="👕">
-        <span class="emoji">👕</span>
-        <p>Black T-shirt</p>
-        <small>Casual</small>
-      </div>
+    <!-- Neck -->
+    <rect x="140" y="155" width="40" height="58" rx="18" fill="#c98766"/>
 
-      <div class="item" data-category="top" data-name="Sweater" data-emoji="🧥">
-        <span class="emoji">🧥</span>
-        <p>Sweater</p>
-        <small>Cozy</small>
-      </div>
+    <!-- Face -->
+    <ellipse cx="160" cy="119" rx="56" ry="68" fill="#d9a080"/>
 
-      <div class="item" data-category="top" data-name="Green Top" data-emoji="👚">
-        <span class="emoji">👚</span>
-        <p>Green Top</p>
-        <small>Fresh</small>
-      </div>
-    </div>
-  </div>
+    <!-- Hair front -->
+    <path id="hairFront" d="M105 113 Q90 43 158 49 Q229 40 215 116
+    Q198 85 183 82 Q152 100 123 82 Z" fill="#38261d"/>
 
-  <!-- BOTTOMS -->
-  <div class="category">
-    <h3>02 — Choose your bottom</h3>
-    <div class="items" id="bottom">
-      <div class="item" data-category="bottom" data-name="Blue Jeans" data-emoji="👖">
-        <span class="emoji">👖</span>
-        <p>Blue Jeans</p>
-        <small>Everyday</small>
-      </div>
+    <!-- Ears -->
+    <ellipse cx="105" cy="126" rx="10" ry="15" fill="#d9a080"/>
+    <ellipse cx="215" cy="126" rx="10" ry="15" fill="#d9a080"/>
 
-      <div class="item" data-category="bottom" data-name="Black Trousers" data-emoji="🖤">
-        <span class="emoji">🖤</span>
-        <p>Black Trousers</p>
-        <small>Minimal</small>
-      </div>
+    <!-- Eyes -->
+    <ellipse cx="140" cy="125" rx="4" ry="5" fill="#34261f"/>
+    <ellipse cx="180" cy="125" rx="4" ry="5" fill="#34261f"/>
 
-      <div class="item" data-category="bottom" data-name="Beige Pants" data-emoji="🤎">
-        <span class="emoji">🤎</span>
-        <p>Beige Pants</p>
-        <small>Neutral</small>
-      </div>
+    <!-- Eyebrows -->
+    <path d="M131 112 Q142 105 151 111" stroke="#38261d" stroke-width="3" fill="none" stroke-linecap="round"/>
+    <path d="M169 111 Q180 105 190 112" stroke="#38261d" stroke-width="3" fill="none" stroke-linecap="round"/>
 
-      <div class="item" data-category="bottom" data-name="Long Skirt" data-emoji="👗">
-        <span class="emoji">👗</span>
-        <p>Long Skirt</p>
-        <small>Flowy</small>
-      </div>
-    </div>
-  </div>
+    <!-- Nose -->
+    <path d="M157 128 L153 143 Q160 148 166 143" stroke="#b87d5d" stroke-width="2" fill="none" stroke-linecap="round"/>
 
-  <!-- SHOES -->
-  <div class="category">
-    <h3>03 — Choose your shoes</h3>
-    <div class="items" id="shoes">
-      <div class="item" data-category="shoes" data-name="White Sneakers" data-emoji="👟">
-        <span class="emoji">👟</span>
-        <p>White Sneakers</p>
-        <small>Comfort</small>
-      </div>
+    <!-- Smile -->
+    <path d="M145 157 Q160 170 176 157" stroke="#8c4e44" stroke-width="2.5" fill="none" stroke-linecap="round"/>
 
-      <div class="item" data-category="shoes" data-name="Flat Sandals" data-emoji="🩴">
-        <span class="emoji">🩴</span>
-        <p>Flat Sandals</p>
-        <small>Easy</small>
-      </div>
+    <!-- Arms -->
+    <path d="M122 210 Q95 225 82 283 L72 338 Q74 350 85 347 Q96 344 98 326 L119 270"
+    fill="#d9a080" stroke="#c58c6e" stroke-width="1"/>
 
-      <div class="item" data-category="shoes" data-name="Classic Shoes" data-emoji="👞">
-        <span class="emoji">👞</span>
-        <p>Classic Shoes</p>
-        <small>Formal</small>
-      </div>
+    <path d="M198 210 Q225 225 238 283 L248 338 Q246 350 235 347 Q224 344 222 326 L201 270"
+    fill="#d9a080" stroke="#c58c6e" stroke-width="1"/>
 
-      <div class="item" data-category="shoes" data-name="Boots" data-emoji="🥾">
-        <span class="emoji">🥾</span>
-        <p>Boots</p>
-        <small>Statement</small>
-      </div>
-    </div>
-  </div>
+    <!-- Torso garment -->
+    <path id="topShape" d="M123 200 L140 186 L160 196 L180 186 L197 200
+    L215 222 L196 242 L190 226 L190 292 L130 292 L130 226 L124 242 L105 222 Z"
+    fill="#78947b"/>
 
-  <!-- ACCESSORIES -->
-  <div class="category">
-    <h3>04 — Add an accessory</h3>
-    <div class="items" id="accessories">
-      <div class="item" data-category="accessory" data-name="Tote Bag" data-emoji="👜">
-        <span class="emoji">👜</span>
-        <p>Tote Bag</p>
-        <small>Reusable</small>
-      </div>
+    <!-- Shirt collar -->
+    <path id="collar" d="M140 187 L160 204 L180 187 L172 216 L160 221 L148 216 Z"
+    fill="#f5f1e7"/>
 
-      <div class="item" data-category="accessory" data-name="Sunglasses" data-emoji="🕶️">
-        <span class="emoji">🕶️</span>
-        <p>Sunglasses</p>
-        <small>Simple</small>
-      </div>
+    <!-- Waist -->
+    <path d="M130 290 L190 290" stroke="#526b52" stroke-width="2"/>
 
-      <div class="item" data-category="accessory" data-name="Scarf" data-emoji="🧣">
-        <span class="emoji">🧣</span>
-        <p>Scarf</p>
-        <small>Layer</small>
-      </div>
+    <!-- Bottom garment -->
+    <path id="bottomShape" d="M130 290 L190 290 L185 380 L165 380 L160 340 L155 380 L135 380 Z"
+    fill="#526b90"/>
 
-      <div class="item" data-category="accessory" data-name="Watch" data-emoji="⌚">
-        <span class="emoji">⌚</span>
-        <p>Watch</p>
-        <small>Classic</small>
-      </div>
-    </div>
-  </div>
+    <!-- Legs -->
+    <path d="M135 380 L145 448 L160 448 L160 390
+    M165 390 L170 448 L185 448 L185 380"
+    stroke="#d9a080" stroke-width="1" fill="#d9a080"/>
 
-  <!-- BUTTONS -->
-  <div class="buttons">
-    <button class="btn" onclick="generateOutfit()">✨ Create My Outfit</button>
-    <button class="btn btn-outline" onclick="randomOutfit()">🎲 Random Outfit</button>
-    <button class="btn btn-outline" onclick="clearSelection()">↺ Reset</button>
-  </div>
+    <!-- Shoes -->
+    <path id="shoesShape" d="M140 445 Q132 455 125 462 Q123 472 155 472 L161 465 L160 448 Z
+    M171 445 Q180 455 190 462 Q192 472 165 472 L160 465 L160 448 Z"
+    fill="#f5f1e7"/>
 
-  <!-- RESULT -->
-  <div class="result" id="result">
-    <h2>Your outfit combination ✨</h2>
-    <div class="outfit" id="outfit"></div>
-    <p class="result-note" id="resultNote"></p>
-
-    <div class="buttons">
-      <button class="btn" onclick="saveOutfit()">♡ Save Outfit</button>
-      <button class="btn btn-outline" onclick="randomOutfit()">Try Another</button>
-    </div>
-  </div>
-
-  <!-- SAVED OUTFITS -->
-  <div class="saved-section">
-    <h2 class="section-title">Your saved looks ♡</h2>
-    <p class="subtitle">Your favourite combinations, ready for another day.</p>
-    <div class="saved-list" id="savedList"></div>
-  </div>
-
-  <!-- TIPS -->
-  <div class="tips">
-    <h2>Style more. Waste less.</h2>
-    <p>Small choices can make your wardrobe more thoughtful. Start with what you already own.</p>
-
-    <div class="tips-grid">
-      <div class="tip-box">
-        <h3>↻ Rewear</h3>
-        <p>Repeat your favourite outfits. Clothes don't need to be worn just once to feel special.</p>
-      </div>
-
-      <div class="tip-box">
-        <h3>✦ Mix & Match</h3>
-        <p>Try pairing familiar pieces in new ways before buying something new.</p>
-      </div>
-
-      <div class="tip-box">
-        <h3>♡ Care</h3>
-        <p>Gentle washing and proper storage can help your clothes last longer.</p>
-      </div>
-    </div>
-  </div>
-
+    <!-- Hair decoration -->
+    <circle cx="108" cy="90" r="7" fill="#b9a178" id="hairDecoration"/>
+  </svg>
 </div>
 
-<footer>
-  <p>© 2026 EcoTrend — Fashion with a purpose 🌱</p>
-  <p style="margin-top:10px"><a href="index.html">Return to EcoTrend Home</a></p>
-</footer>
+<!-- CONTROLS -->
+<div class="control-box">
+  <h2>Customize Your Look ✨</h2>
+  <p class="sub">Choose your outfit pieces</p>
 
+  <div class="group">
+    <h3>Hair Style</h3>
+    <div class="options">
+      <button class="opt active" onclick="changeHair(0,this)">Long</button>
+      <button class="opt" onclick="changeHair(1,this)">Ponytail</button>
+      <button class="opt" onclick="changeHair(2,this)">Short</button>
+    </div>
+  </div>
+
+  <div class="group">
+    <h3>Top Style</h3>
+    <div class="options">
+      <button class="opt active" onclick="changeTop(0,this)">T-shirt</button>
+      <button class="opt" onclick="changeTop(1,this)">Sweater</button>
+      <button class="opt" onclick="changeTop(2,this)">Crop Top</button>
+      <button class="opt" onclick="changeTop(3,this)">Shirt</button>
+      <button class="opt" onclick="changeTop(4,this)">Blouse</button>
+    </div>
+  </div>
+
+  <div class="group">
+    <h3>Top Color</h3>
+    <div class="colors" id="topColors">
+      <button class="color active" style="background:#78947b" onclick="changeColor('top','#78947b',this)" title="Sage"></button>
+      <button class="color" style="background:#e8dfcf" onclick="changeColor('top','#e8dfcf',this)" title="Cream"></button>
+      <button class="color" style="background:#bd7771" onclick="changeColor('top','#bd7771',this)" title="Rose"></button>
+      <button class="color" style="background:#343b3b" onclick="changeColor('top','#343b3b',this)" title="Charcoal"></button>
+      <button class="color" style="background:#9c83b5" onclick="changeColor('top','#9c83b5',this)" title="Lavender"></button>
+    </div>
+  </div>
+
+  <div class="group">
+    <h3>Bottom Style</h3>
+    <div class="options">
+      <button class="opt active" onclick="changeBottom(0,this)">Jeans</button>
+      <button class="opt" onclick="changeBottom(1,this)">Wide Pants</button>
+      <button class="opt" onclick="changeBottom(2,this)">Skirt</button>
+      <button class="opt" onclick="changeBottom(3,this)">Shorts</button>
+      <button class="opt" onclick="changeBottom(4,this)">Trousers</button>
+    </div>
+  </div>
+
+  <div class="group">
+    <h3>Bottom Color</h3>
+    <div class="colors" id="bottomColors">
+      <button class="color active" style="background:#526b90" onclick="changeColor('bottom','#526b90',this)" title="Blue"></button>
+      <button class="color" style="background:#393939" onclick="changeColor('bottom','#393939',this)" title="Black"></button>
+      <button class="color" style="background:#c6ad8a" onclick="changeColor('bottom','#c6ad8a',this)" title="Beige"></button>
+      <button class="color" style="background:#78947b" onclick="changeColor('bottom','#78947b',this)" title="Green"></button>
+      <button class="color" style="background:#b17a94" onclick="changeColor('bottom','#b17a94',this)" title="Pink"></button>
+    </div>
+  </div>
+
+  <div class="group">
+    <h3>Shoes</h3>
+    <div class="options">
+      <button class="opt active" onclick="changeShoes('#f5f1e7',this)">White</button>
+      <button class="opt" onclick="changeShoes('#343434',this)">Black</button>
+      <button class="opt" onclick="changeShoes('#a67c52',this)">Brown</button>
+      <button class="opt" onclick="changeShoes('#bd7771',this)">Rose</button>
+    </div>
+  </div>
+
+  <div class="actions">
+    <button class="btn" onclick="randomLook()">🎲 Random Look</button>
+    <button class="btn secondary" onclick="saveLook()">♡ Save Look</button>
+    <button class="btn secondary" onclick="resetLook()">Reset</button>
+  </div>
+
+  <div class="look">
+    <strong>Current Style</strong>
+    <p id="styleName">Sage Casual · Blue Jeans</p>
+    <p>Try different combinations to discover your personal style using clothes you already own.</p>
+  </div>
+</div>
+</div>
+
+<div class="saved">
+  <h2>♡ My Saved Looks</h2>
+  <div class="saved-items" id="savedItems"></div>
+</div>
+
+<footer>EcoTrend · Wear it again. Style it differently. 🌱</footer>
 <div class="toast" id="toast"></div>
 
 <script>
-const selected = {
-  top: null,
-  bottom: null,
-  shoes: null,
-  accessory: null
-};
+let topIndex=0,bottomIndex=0,hairIndex=0;
+let topColor="#78947b",bottomColor="#526b90",shoeColor="#f5f1e7";
 
-let currentOutfit = [];
-let savedOutfits = JSON.parse(localStorage.getItem("ecoWardrobe")) || [];
+const tops=[
+`M123 200 L140 186 L160 196 L180 186 L197 200 L215 222 L196 242 L190 226 L190 292 L130 292 L130 226 L124 242 L105 222 Z`,
+`M123 200 L140 186 L160 196 L180 186 L197 200 L215 222 L196 242 L190 226 L190 292 L130 292 L130 226 L124 242 L105 222 Z`,
+`M130 200 L140 186 L160 196 L180 186 L190 200 L205 220 L194 235 L187 225 L187 270 L133 270 L133 225 L126 235 L115 220 Z`,
+`M120 200 L140 186 L160 196 L180 186 L200 200 L218 224 L197 243 L190 225 L190 292 L130 292 L130 225 L123 243 L102 224 Z`,
+`M123 200 L140 186 L160 196 L180 186 L197 200 L215 222 L196 242 L190 226 L190 292 L130 292 L130 226 L124 242 L105 222 Z`
+];
 
-document.querySelectorAll(".item").forEach(item => {
-  item.addEventListener("click", () => {
-    const category = item.dataset.category;
+const bottoms=[
+`M130 290 L190 290 L185 380 L165 380 L160 340 L155 380 L135 380 Z`,
+`M125 290 L195 290 L190 380 L173 380 L160 340 L147 380 L130 380 Z`,
+`M125 290 L195 290 L220 380 L100 380 Z`,
+`M130 290 L190 290 L185 350 L165 350 L160 330 L155 350 L135 350 Z`,
+`M125 290 L195 290 L190 380 L170 380 L160 340 L150 380 L130 380 Z`
+];
 
-    document.querySelectorAll(`[data-category="${category}"]`)
-      .forEach(el => el.classList.remove("selected"));
+const topNames=["T-shirt","Sweater","Crop Top","Shirt","Blouse"];
+const bottomNames=["Jeans","Wide Pants","Skirt","Shorts","Trousers"];
+const hairColors=["#38261d","#38261d","#38261d"];
 
-    item.classList.add("selected");
-
-    selected[category] = {
-      name: item.dataset.name,
-      emoji: item.dataset.emoji
-    };
-  });
-});
-
-function generateOutfit() {
-  if (!selected.top || !selected.bottom) {
-    showToast("Please select at least a top and bottom!");
-    return;
-  }
-
-  currentOutfit = [
-    { label: "Top", ...selected.top },
-    { label: "Bottom", ...selected.bottom }
-  ];
-
-  if (selected.shoes) {
-    currentOutfit.push({ label: "Shoes", ...selected.shoes });
-  }
-
-  if (selected.accessory) {
-    currentOutfit.push({ label: "Accessory", ...selected.accessory });
-  }
-
-  displayOutfit();
+function changeTop(i,btn){
+  topIndex=i;
+  document.getElementById("topShape").setAttribute("d",tops[i]);
+  document.querySelectorAll(".group:nth-of-type(2) .opt").forEach(b=>b.classList.remove("active"));
+  btn.classList.add("active");
+  updateStyle();
 }
 
-function randomOutfit() {
-  const categories = ["top", "bottom", "shoes", "accessory"];
-
-  categories.forEach(category => {
-    const items = document.querySelectorAll(`[data-category="${category}"]`);
-    const randomIndex = Math.floor(Math.random() * items.length);
-
-    items.forEach(item => item.classList.remove("selected"));
-
-    const chosen = items[randomIndex];
-    chosen.classList.add("selected");
-
-    selected[category] = {
-      name: chosen.dataset.name,
-      emoji: chosen.dataset.emoji
-    };
-  });
-
-  generateOutfit();
+function changeBottom(i,btn){
+  bottomIndex=i;
+  document.getElementById("bottomShape").setAttribute("d",bottoms[i]);
+  document.querySelectorAll(".group:nth-of-type(4) .opt").forEach(b=>b.classList.remove("active"));
+  btn.classList.add("active");
+  updateStyle();
 }
 
-function displayOutfit() {
-  const outfitContainer = document.getElementById("outfit");
-
-  outfitContainer.innerHTML = currentOutfit.map(piece => `
-    <div class="outfit-piece">
-      <span>${piece.emoji}</span>
-      <p>${piece.name}</p>
-      <small>${piece.label}</small>
-    </div>
-  `).join("");
-
-  const notes = [
-    "A little creativity can make familiar pieces feel new again.",
-    "Your wardrobe already has more possibilities than you think.",
-    "Try this combination for a fresh everyday look.",
-    "Style is about expression, not how much you own."
-  ];
-
-  document.getElementById("resultNote").textContent =
-    notes[Math.floor(Math.random() * notes.length)];
-
-  document.getElementById("result").classList.add("show");
-
-  document.getElementById("result").scrollIntoView({
-    behavior: "smooth",
-    block: "center"
-  });
+function changeColor(type,color,btn){
+  if(type==="top"){
+    topColor=color;
+    document.getElementById("topShape").setAttribute("fill",color);
+  }else{
+    bottomColor=color;
+    document.getElementById("bottomShape").setAttribute("fill",color);
+  }
+  btn.parentElement.querySelectorAll(".color").forEach(b=>b.classList.remove("active"));
+  btn.classList.add("active");
+  updateStyle();
 }
 
-function saveOutfit() {
-  if (!currentOutfit.length) return;
+function changeShoes(color,btn){
+  shoeColor=color;
+  document.getElementById("shoesShape").setAttribute("fill",color);
+  btn.parentElement.querySelectorAll(".opt").forEach(b=>b.classList.remove("active"));
+  btn.classList.add("active");
+  updateStyle();
+}
 
-  const outfit = {
-    id: Date.now(),
-    pieces: [...currentOutfit]
-  };
+function changeHair(i,btn){
+  hairIndex=i;
+  const back=document.getElementById("hairBack");
+  const front=document.getElementById("hairFront");
 
-  savedOutfits.unshift(outfit);
+  if(i===0){
+    back.setAttribute("d","M105 82 Q75 60 85 135 L92 205 Q100 225 113 210 L120 150 Z M215 82 Q245 60 235 135 L228 205 Q220 225 207 210 L200 150 Z");
+    front.setAttribute("d","M105 113 Q90 43 158 49 Q229 40 215 116 Q198 85 183 82 Q152 100 123 82 Z");
+  }
+  if(i===1){
+    back.setAttribute("d","M105 82 Q75 60 85 135 L92 205 Q100 225 113 210 L120 150 Z M215 82 Q245 60 235 135 L228 205 Q220 225 207 210 L200 150 Z M225 80 Q250 100 238 170 L225 190 L215 130 Z");
+    front.setAttribute("d","M105 113 Q90 43 158 49 Q229 40 215 116 Q198 85 183 82 Q152 100 123 82 Z");
+  }
+  if(i===2){
+    back.setAttribute("d","M105 82 Q75 60 85 135 L92 165 L113 170 L120 150 Z M215 82 Q245 60 235 135 L228 165 L207 170 L200 150 Z");
+    front.setAttribute("d","M105 113 Q90 43 158 49 Q229 40 215 116 Q198 85 183 82 Q152 100 123 82 Z");
+  }
+  btn.parentElement.querySelectorAll(".opt").forEach(b=>b.classList.remove("active"));
+  btn.classList.add("active");
+  updateStyle();
+}
 
-  localStorage.setItem("ecoWardrobe", JSON.stringify(savedOutfits));
+function updateStyle(){
+  document.getElementById("styleName").textContent=
+  topNames[topIndex]+" · "+bottomNames[bottomIndex];
+}
 
+function randomLook(){
+  const ti=Math.floor(Math.random()*tops.length);
+  const bi=Math.floor(Math.random()*bottoms.length);
+  const hi=Math.floor(Math.random()*3);
+
+  document.getElementById("topShape").setAttribute("d",tops[ti]);
+  document.getElementById("bottomShape").setAttribute("d",bottoms[bi]);
+
+  topIndex=ti;bottomIndex=bi;
+
+  const colorsTop=["#78947b","#e8dfcf","#bd7771","#343b3b","#9c83b5"];
+  const colorsBottom=["#526b90","#393939","#c6ad8a","#78947b","#b17a94"];
+
+  topColor=colorsTop[Math.floor(Math.random()*colorsTop.length)];
+  bottomColor=colorsBottom[Math.floor(Math.random()*colorsBottom.length)];
+
+  document.getElementById("topShape").setAttribute("fill",topColor);
+  document.getElementById("bottomShape").setAttribute("fill",bottomColor);
+
+  document.querySelectorAll("#topColors .color").forEach(b=>b.classList.remove("active"));
+  document.querySelectorAll("#bottomColors .color").forEach(b=>b.classList.remove("active"));
+
+  changeHairRandom(hi);
+  updateStyle();
+  showToast("New look created ✨");
+}
+
+function changeHairRandom(i){
+  hairIndex=i;
+  const back=document.getElementById("hairBack");
+  if(i===0){
+    back.setAttribute("d","M105 82 Q75 60 85 135 L92 205 Q100 225 113 210 L120 150 Z M215 82 Q245 60 235 135 L228 205 Q220 225 207 210 L200 150 Z");
+  }else if(i===1){
+    back.setAttribute("d","M105 82 Q75 60 85 135 L92 205 Q100 225 113 210 L120 150 Z M215 82 Q245 60 235 135 L228 205 Q220 225 207 210 L200 150 Z M225 80 Q250 100 238 170 L225 190 L215 130 Z");
+  }else{
+    back.setAttribute("d","M105 82 Q75 60 85 135 L92 165 L113 170 L120 150 Z M215 82 Q245 60 235 135 L228 165 L207 170 L200 150 Z");
+  }
+}
+
+function saveLook(){
+  let looks=JSON.parse(localStorage.getItem("ecoTryOnLooks")||"[]");
+  looks.unshift({
+    name:topNames[topIndex]+" + "+bottomNames[bottomIndex],
+    top:topColor,bottom:bottomColor,shoes:shoeColor,
+    date:new Date().toLocaleDateString()
+  });
+  localStorage.setItem("ecoTryOnLooks",JSON.stringify(looks));
   renderSaved();
-  showToast("Outfit saved successfully! ♡");
+  showToast("Look saved ♡");
 }
 
-function renderSaved() {
-  const container = document.getElementById("savedList");
+function renderSaved(){
+  const looks=JSON.parse(localStorage.getItem("ecoTryOnLooks")||"[]");
+  const container=document.getElementById("savedItems");
 
-  if (!savedOutfits.length) {
-    container.innerHTML = `
-      <p style="color:#7a8178">
-        No saved outfits yet. Create your first combination!
-      </p>
-    `;
+  if(!looks.length){
+    container.innerHTML="<p>No saved looks yet. Create one above!</p>";
     return;
   }
 
-  container.innerHTML = savedOutfits.map((outfit, index) => `
+  container.innerHTML=looks.map((look,i)=>`
     <div class="saved-card">
-      <h3>Look ${savedOutfits.length - index} ♡</h3>
-      <p>
-        ${outfit.pieces.map(piece =>
-          piece.emoji + " " + piece.name
-        ).join(" · ")}
-      </p>
-      <button onclick="deleteOutfit(${outfit.id})">Remove outfit</button>
+      <strong>Look ${i+1}</strong>
+      <p>${look.name}</p>
+      <p>Saved on ${look.date}</p>
+      <button onclick="removeLook(${i})">Remove</button>
     </div>
   `).join("");
 }
 
-function deleteOutfit(id) {
-  savedOutfits = savedOutfits.filter(outfit => outfit.id !== id);
-
-  localStorage.setItem("ecoWardrobe", JSON.stringify(savedOutfits));
-
+function removeLook(i){
+  let looks=JSON.parse(localStorage.getItem("ecoTryOnLooks")||"[]");
+  looks.splice(i,1);
+  localStorage.setItem("ecoTryOnLooks",JSON.stringify(looks));
   renderSaved();
-  showToast("Outfit removed.");
 }
 
-function clearSelection() {
-  Object.keys(selected).forEach(key => selected[key] = null);
-
-  document.querySelectorAll(".item")
-    .forEach(item => item.classList.remove("selected"));
-
-  document.getElementById("result").classList.remove("show");
-
-  currentOutfit = [];
-
-  showToast("Selection cleared!");
+function resetLook(){
+  topIndex=0;bottomIndex=0;
+  topColor="#78947b";bottomColor="#526b90";shoeColor="#f5f1e7";
+  document.getElementById("topShape").setAttribute("d",tops[0]);
+  document.getElementById("bottomShape").setAttribute("d",bottoms[0]);
+  document.getElementById("topShape").setAttribute("fill",topColor);
+  document.getElementById("bottomShape").setAttribute("fill",bottomColor);
+  document.getElementById("shoesShape").setAttribute("fill",shoeColor);
+  updateStyle();
+  showToast("Avatar reset!");
 }
 
-function showToast(message) {
-  const toast = document.getElementById("toast");
-
-  toast.textContent = message;
+function showToast(msg){
+  const toast=document.getElementById("toast");
+  toast.textContent=msg;
   toast.classList.add("show");
-
-  setTimeout(() => {
-    toast.classList.remove("show");
-  }, 2500);
+  setTimeout(()=>toast.classList.remove("show"),2200);
 }
 
 renderSaved();
 </script>
-
 </body>
-  </html>
+</html>
