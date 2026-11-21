@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EcoTrend | Wardrobe Planner</title>
+
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --green: #526b52;
+  --dark: #243128;
+  --cream: #f7f5ed;
+  --light: #e8ede3;
+  --white: #ffffff;
+  --muted: #7a8178;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--cream);
+  color: var(--dark);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+nav {
+  padding: 20px 7%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #e5e4dc;
+  background: var(--cream);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.logo {
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: var(--green);
+}
+
+.logo span {
+  color: var(--dark);
+}
+
+nav a {
+  text-decoration: none;
+  color: var(--dark);
+  font-size: 14px;
+}
+
+nav a:hover {
+  color: var(--green);
+}
+
+.hero {
+  padding: 75px 7% 55px;
+  text-align: center;
+}
+
+.tag {
+  font-size: 11px;
+  letter-spacing: 3px;
+  color: var(--green);
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.hero h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(38px, 6vw, 66px);
+  margin: 20px 0;
+  line-height: 1.1;
+}
+
+.hero h1 span {
+  color: var(--green);
+}
+
+.hero p {
+  max-width: 570px;
+  margin: auto;
+  color: var(--muted);
+  line-height: 1.8;
+}
+
+.container {
+  max-width: 1100px;
+  margin: auto;
+  padding: 20px 6% 70px;
+}
+
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 34px;
+  margin-bottom: 10px;
+}
+
+.subtitle {
+  color: var(--muted);
+  margin-bottom: 28px;
+  line-height: 1.7;
+}
+
+.category {
+  margin-bottom: 38px;
+}
+
+.category h3 {
+  font-size: 18px;
+  margin-bottom: 16px;
+}
+
+.items {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 15px;
+}
+
+.item {
+  border: 1px solid #dedfd6;
+  background: white;
+  padding: 22px 12px;
+  text-align: center;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: 0.25s;
+}
+
+.item:hover {
+  transform: translateY(-4px);
+  border-color: var(--green);
+}
+
+.item.selected {
+  background: var(--light);
+  border: 2px solid var(--green);
+}
+
+.item .emoji {
+  font-size: 35px;
+  display: block;
+  margin-bottom: 10px;
+}
+
+.item p {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.item small {
+  color: var(--muted);
+  display: block;
+  margin-top: 5px;
+}
+
+.item.selected::after {
+  content: "✓ Selected";
+  display: block;
+  margin-top: 10px;
+  color: var(--green);
+  font-size: 11px;
+  font-weight: bold;
+}
+
+.buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 30px 0;
+}
+
+.btn {
+  padding: 14px 22px;
+  background: var(--green);
+  color: white;
+  border: 1px solid var(--green);
+  border-radius: 5px;
+  cursor: pointer;
+  font-family: inherit;
+  transition: 0.2s;
+}
+
+.btn:hover {
+  background: #3e5540;
+  transform: translateY(-2px);
+}
+
+.btn-outline {
+  background: transparent;
+  color: var(--green);
+}
+
+.btn-outline:hover {
+  color: white;
+}
+
+.result {
+  display: none;
+  background: #e9eee5;
+  border-radius: 16px;
+  padding: 28px;
+  margin-top: 25px;
+  animation: appear 0.4s ease;
+}
+
+.result.show {
+  display: block;
+}
+
+.result h2 {
+  font-family: 'Playfair Display', serif;
+  margin-bottom: 15px;
+}
+
+.outfit {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin: 20px 0;
+}
+
+.outfit-piece {
+  background: white;
+  border-radius: 10px;
+  text-align: center;
+  padding: 18px 8px;
+}
+
+.outfit-piece span {
+  font-size: 30px;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.outfit-piece small {
+  font-size: 11px;
+  color: var(--muted);
+}
+
+.outfit-piece p {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.result-note {
+  line-height: 1.7;
+  color: #536253;
+  margin-top: 15px;
+}
+
+.saved-section {
+  margin-top: 60px;
+}
+
+.saved-list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15px;
+}
+
+.saved-card {
+  background: white;
+  border: 1px solid #e4e5dd;
+  border-radius: 12px;
+  padding: 20px;
+}
+
+.saved-card h3 {
+  margin-bottom: 10px;
+  font-size: 16px;
+}
+
+.saved-card p {
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+.saved-card button {
+  border: none;
+  background: transparent;
+  color: #a05454;
+  cursor: pointer;
+  margin-top: 12px;
+  font-family: inherit;
+}
+
+.tips {
+  background: #293b2d;
+  color: white;
+  border-radius: 15px;
+  padding: 35px;
+  margin-top: 65px;
+}
+
+.tips h2 {
+  font-family: 'Playfair Display', serif;
+  margin-bottom: 15px;
+}
+
+.tips p {
+  color: #d7dfd4;
+  line-height: 1.8;
+}
+
+.tips-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-top: 25px;
+}
+
+.tip-box {
+  background: #354a38;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.tip-box h3 {
+  font-size: 15px;
+  margin-bottom: 8px;
+}
+
+.tip-box p {
+  font-size: 13px;
+}
+
+footer {
+  text-align: center;
+  padding: 28px;
+  border-top: 1px solid #e3e4dc;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+footer a {
+  color: var(--green);
+  text-decoration: none;
+}
+
+.toast {
+  position: fixed;
+  bottom: 25px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #293b2d;
+  color: white;
+  padding: 13px 20px;
+  border-radius: 8px;
+  display: none;
+  z-index: 999;
+}
+
+.toast.show {
+  display: block;
+  animation: appear 0.3s;
+}
+
+@keyframes appear {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 700px) {
+  .items {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .outfit {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .saved-list {
+    grid-template-columns: 1fr;
+  }
+
+  .tips-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .hero {
+    padding-top: 50px;
+  }
+
+  .hero h1 {
+    font-size: 43px;
+  }
+
+  .section-title {
+    font-size: 29px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<nav>
+  <div class="logo">ECO<span>TREND</span></div>
+  <a href="index.html">← Back to Home</a>
+</nav>
+
+<section class="hero">
+  <span class="tag">THINK · STYLE · REWEAR</span>
+  <h1>Your closet.<br><span>More possibilities.</span></h1>
+  <p>Select the pieces you already own and discover new ways to style them. Good fashion isn't about having more—it's about making more of what you have.</p>
+</section>
+
+<div class="container">
+
+  <h2 class="section-title">Build your outfit</h2>
+  <p class="subtitle">Select clothes from each category. Mix your pieces and create your own style.</p>
+
+  <!-- TOPS -->
+  <div class="category">
+    <h3>01 — Choose your top</h3>
+    <div class="items" id="tops">
+      <div class="item" data-category="top" data-name="White Shirt" data-emoji="👔">
+        <span class="emoji">👔</span>
+        <p>White Shirt</p>
+        <small>Classic</small>
+      </div>
+
+      <div class="item" data-category="top" data-name="Black T-shirt" data-emoji="👕">
+        <span class="emoji">👕</span>
+        <p>Black T-shirt</p>
+        <small>Casual</small>
+      </div>
+
+      <div class="item" data-category="top" data-name="Sweater" data-emoji="🧥">
+        <span class="emoji">🧥</span>
+        <p>Sweater</p>
+        <small>Cozy</small>
+      </div>
+
+      <div class="item" data-category="top" data-name="Green Top" data-emoji="👚">
+        <span class="emoji">👚</span>
+        <p>Green Top</p>
+        <small>Fresh</small>
+      </div>
+    </div>
+  </div>
+
+  <!-- BOTTOMS -->
+  <div class="category">
+    <h3>02 — Choose your bottom</h3>
+    <div class="items" id="bottom">
+      <div class="item" data-category="bottom" data-name="Blue Jeans" data-emoji="👖">
+        <span class="emoji">👖</span>
+        <p>Blue Jeans</p>
+        <small>Everyday</small>
+      </div>
+
+      <div class="item" data-category="bottom" data-name="Black Trousers" data-emoji="🖤">
+        <span class="emoji">🖤</span>
+        <p>Black Trousers</p>
+        <small>Minimal</small>
+      </div>
+
+      <div class="item" data-category="bottom" data-name="Beige Pants" data-emoji="🤎">
+        <span class="emoji">🤎</span>
+        <p>Beige Pants</p>
+        <small>Neutral</small>
+      </div>
+
+      <div class="item" data-category="bottom" data-name="Long Skirt" data-emoji="👗">
+        <span class="emoji">👗</span>
+        <p>Long Skirt</p>
+        <small>Flowy</small>
+      </div>
+    </div>
+  </div>
+
+  <!-- SHOES -->
+  <div class="category">
+    <h3>03 — Choose your shoes</h3>
+    <div class="items" id="shoes">
+      <div class="item" data-category="shoes" data-name="White Sneakers" data-emoji="👟">
+        <span class="emoji">👟</span>
+        <p>White Sneakers</p>
+        <small>Comfort</small>
+      </div>
+
+      <div class="item" data-category="shoes" data-name="Flat Sandals" data-emoji="🩴">
+        <span class="emoji">🩴</span>
+        <p>Flat Sandals</p>
+        <small>Easy</small>
+      </div>
+
+      <div class="item" data-category="shoes" data-name="Classic Shoes" data-emoji="👞">
+        <span class="emoji">👞</span>
+        <p>Classic Shoes</p>
+        <small>Formal</small>
+      </div>
+
+      <div class="item" data-category="shoes" data-name="Boots" data-emoji="🥾">
+        <span class="emoji">🥾</span>
+        <p>Boots</p>
+        <small>Statement</small>
+      </div>
+    </div>
+  </div>
+
+  <!-- ACCESSORIES -->
+  <div class="category">
+    <h3>04 — Add an accessory</h3>
+    <div class="items" id="accessories">
+      <div class="item" data-category="accessory" data-name="Tote Bag" data-emoji="👜">
+        <span class="emoji">👜</span>
+        <p>Tote Bag</p>
+        <small>Reusable</small>
+      </div>
+
+      <div class="item" data-category="accessory" data-name="Sunglasses" data-emoji="🕶️">
+        <span class="emoji">🕶️</span>
+        <p>Sunglasses</p>
+        <small>Simple</small>
+      </div>
+
+      <div class="item" data-category="accessory" data-name="Scarf" data-emoji="🧣">
+        <span class="emoji">🧣</span>
+        <p>Scarf</p>
+        <small>Layer</small>
+      </div>
+
+      <div class="item" data-category="accessory" data-name="Watch" data-emoji="⌚">
+        <span class="emoji">⌚</span>
+        <p>Watch</p>
+        <small>Classic</small>
+      </div>
+    </div>
+  </div>
+
+  <!-- BUTTONS -->
+  <div class="buttons">
+    <button class="btn" onclick="generateOutfit()">✨ Create My Outfit</button>
+    <button class="btn btn-outline" onclick="randomOutfit()">🎲 Random Outfit</button>
+    <button class="btn btn-outline" onclick="clearSelection()">↺ Reset</button>
+  </div>
+
+  <!-- RESULT -->
+  <div class="result" id="result">
+    <h2>Your outfit combination ✨</h2>
+    <div class="outfit" id="outfit"></div>
+    <p class="result-note" id="resultNote"></p>
+
+    <div class="buttons">
+      <button class="btn" onclick="saveOutfit()">♡ Save Outfit</button>
+      <button class="btn btn-outline" onclick="randomOutfit()">Try Another</button>
+    </div>
+  </div>
+
+  <!-- SAVED OUTFITS -->
+  <div class="saved-section">
+    <h2 class="section-title">Your saved looks ♡</h2>
+    <p class="subtitle">Your favourite combinations, ready for another day.</p>
+    <div class="saved-list" id="savedList"></div>
+  </div>
+
+  <!-- TIPS -->
+  <div class="tips">
+    <h2>Style more. Waste less.</h2>
+    <p>Small choices can make your wardrobe more thoughtful. Start with what you already own.</p>
+
+    <div class="tips-grid">
+      <div class="tip-box">
+        <h3>↻ Rewear</h3>
+        <p>Repeat your favourite outfits. Clothes don't need to be worn just once to feel special.</p>
+      </div>
+
+      <div class="tip-box">
+        <h3>✦ Mix & Match</h3>
+        <p>Try pairing familiar pieces in new ways before buying something new.</p>
+      </div>
+
+      <div class="tip-box">
+        <h3>♡ Care</h3>
+        <p>Gentle washing and proper storage can help your clothes last longer.</p>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <p>© 2026 EcoTrend — Fashion with a purpose 🌱</p>
+  <p style="margin-top:10px"><a href="index.html">Return to EcoTrend Home</a></p>
+</footer>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const selected = {
+  top: null,
+  bottom: null,
+  shoes: null,
+  accessory: null
+};
+
+let currentOutfit = [];
+let savedOutfits = JSON.parse(localStorage.getItem("ecoWardrobe")) || [];
+
+document.querySelectorAll(".item").forEach(item => {
+  item.addEventListener("click", () => {
+    const category = item.dataset.category;
+
+    document.querySelectorAll(`[data-category="${category}"]`)
+      .forEach(el => el.classList.remove("selected"));
+
+    item.classList.add("selected");
+
+    selected[category] = {
+      name: item.dataset.name,
+      emoji: item.dataset.emoji
+    };
+  });
+});
+
+function generateOutfit() {
+  if (!selected.top || !selected.bottom) {
+    showToast("Please select at least a top and bottom!");
+    return;
+  }
+
+  currentOutfit = [
+    { label: "Top", ...selected.top },
+    { label: "Bottom", ...selected.bottom }
+  ];
+
+  if (selected.shoes) {
+    currentOutfit.push({ label: "Shoes", ...selected.shoes });
+  }
+
+  if (selected.accessory) {
+    currentOutfit.push({ label: "Accessory", ...selected.accessory });
+  }
+
+  displayOutfit();
+}
+
+function randomOutfit() {
+  const categories = ["top", "bottom", "shoes", "accessory"];
+
+  categories.forEach(category => {
+    const items = document.querySelectorAll(`[data-category="${category}"]`);
+    const randomIndex = Math.floor(Math.random() * items.length);
+
+    items.forEach(item => item.classList.remove("selected"));
+
+    const chosen = items[randomIndex];
+    chosen.classList.add("selected");
+
+    selected[category] = {
+      name: chosen.dataset.name,
+      emoji: chosen.dataset.emoji
+    };
+  });
+
+  generateOutfit();
+}
+
+function displayOutfit() {
+  const outfitContainer = document.getElementById("outfit");
+
+  outfitContainer.innerHTML = currentOutfit.map(piece => `
+    <div class="outfit-piece">
+      <span>${piece.emoji}</span>
+      <p>${piece.name}</p>
+      <small>${piece.label}</small>
+    </div>
+  `).join("");
+
+  const notes = [
+    "A little creativity can make familiar pieces feel new again.",
+    "Your wardrobe already has more possibilities than you think.",
+    "Try this combination for a fresh everyday look.",
+    "Style is about expression, not how much you own."
+  ];
+
+  document.getElementById("resultNote").textContent =
+    notes[Math.floor(Math.random() * notes.length)];
+
+  document.getElementById("result").classList.add("show");
+
+  document.getElementById("result").scrollIntoView({
+    behavior: "smooth",
+    block: "center"
+  });
+}
+
+function saveOutfit() {
+  if (!currentOutfit.length) return;
+
+  const outfit = {
+    id: Date.now(),
+    pieces: [...currentOutfit]
+  };
+
+  savedOutfits.unshift(outfit);
+
+  localStorage.setItem("ecoWardrobe", JSON.stringify(savedOutfits));
+
+  renderSaved();
+  showToast("Outfit saved successfully! ♡");
+}
+
+function renderSaved() {
+  const container = document.getElementById("savedList");
+
+  if (!savedOutfits.length) {
+    container.innerHTML = `
+      <p style="color:#7a8178">
+        No saved outfits yet. Create your first combination!
+      </p>
+    `;
+    return;
+  }
+
+  container.innerHTML = savedOutfits.map((outfit, index) => `
+    <div class="saved-card">
+      <h3>Look ${savedOutfits.length - index} ♡</h3>
+      <p>
+        ${outfit.pieces.map(piece =>
+          piece.emoji + " " + piece.name
+        ).join(" · ")}
+      </p>
+      <button onclick="deleteOutfit(${outfit.id})">Remove outfit</button>
+    </div>
+  `).join("");
+}
+
+function deleteOutfit(id) {
+  savedOutfits = savedOutfits.filter(outfit => outfit.id !== id);
+
+  localStorage.setItem("ecoWardrobe", JSON.stringify(savedOutfits));
+
+  renderSaved();
+  showToast("Outfit removed.");
+}
+
+function clearSelection() {
+  Object.keys(selected).forEach(key => selected[key] = null);
+
+  document.querySelectorAll(".item")
+    .forEach(item => item.classList.remove("selected"));
+
+  document.getElementById("result").classList.remove("show");
+
+  currentOutfit = [];
+
+  showToast("Selection cleared!");
+}
+
+function showToast(message) {
+  const toast = document.getElementById("toast");
+
+  toast.textContent = message;
+  toast.classList.add("show");
+
+  setTimeout(() => {
+    toast.classList.remove("show");
+  }, 2500);
+}
+
+renderSaved();
+</script>
+
+</body>
+  </html>
